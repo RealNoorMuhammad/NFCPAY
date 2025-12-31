@@ -1,0 +1,96 @@
+.send-money-form {
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.form-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.form-row-send {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form-submit-send {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.form-submit-send svg {
+  width: 20px;
+  height: 20px;
+}
+
+.form-submit-send .spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.deposit-warning {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  color: #ffc107;
+}
+
+.deposit-warning svg {
+  flex-shrink: 0;
+  color: #ffc107;
+}
+
+.deposit-warning p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.qr-scanner-button-container {
+  margin-bottom: 20px;
+}
+
+.qr-scanner-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+}
+
+.qr-scanner-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 600px) {
+  .form-row-send {
+    grid-template-columns: 1fr;
+  }
+
+  .deposit-warning {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+

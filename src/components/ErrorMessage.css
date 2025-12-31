@@ -1,0 +1,44 @@
+.error-message {
+  padding: 24px;
+  margin: 16px 0;
+  border-left: 4px solid var(--accent-red);
+  background: rgba(255, 0, 0, 0.1);
+  border: 2px solid rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+}
+
+.error-icon {
+  color: var(--accent-red);
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.6));
+}
+
+.error-content {
+  margin-bottom: 16px;
+}
+
+.error-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.error-text {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.error-retry,
+.error-close {
+  padding: 10px 20px;
+  font-size: 14px;
+}
+
