@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import './QRScanner.css'
 
 export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
@@ -110,7 +111,7 @@ export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
 
   if (!isOpen) return null
 
-  return (
+  const modalContent = (
     <div className="qr-scanner-overlay" onClick={onClose}>
       <div className="qr-scanner-modal glass" onClick={(e) => e.stopPropagation()}>
         <div className="qr-scanner-header">
@@ -204,5 +205,7 @@ export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
       </div>
     </div>
   )
+
+  return createPortal(modalContent, document.body)
 }
 

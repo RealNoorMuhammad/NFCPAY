@@ -25,15 +25,13 @@
 .app-title {
   font-size: 42px;
   font-weight: 900;
-  background: linear-gradient(135deg, #ffff00 0%, #ffeb3b 50%, #ffff00 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 8px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
-  filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.8));
+  letter-spacing: 1px;
+  text-transform: none;
 }
 
 .app-subtitle {
