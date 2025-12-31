@@ -5,14 +5,22 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2000;
   animation: fadeIn 0.4s ease-out;
   padding: 20px;
+}
+
+/* Desktop: Remove blur for better visibility */
+@media (min-width: 768px) {
+  .qr-scanner-overlay {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .qr-scanner-modal {
@@ -389,6 +397,43 @@
   100% {
     top: 100%;
     opacity: 0;
+  }
+}
+
+/* Mobile responsive font sizes */
+@media (max-width: 767px) {
+  .qr-scanner-title {
+    font-size: 18px;
+  }
+
+  .qr-ready-text {
+    font-size: 20px;
+  }
+
+  .qr-instruction {
+    font-size: 13px;
+  }
+
+  .qr-scanning-indicator {
+    font-size: 11px;
+    padding: 6px 12px;
+  }
+
+  .qr-manual-btn {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .qr-scanner-error p {
+    font-size: 13px;
+  }
+
+  .qr-scanner-header {
+    padding: 20px 20px 16px 20px;
+  }
+
+  .qr-scanner-content {
+    padding: 24px 20px;
   }
 }
 
