@@ -11,7 +11,7 @@ export default function ErrorMessage({ message, onClose, onRetry }) {
       </div>
       <div className="error-content">
         <h3 className="error-title">Error</h3>
-        <p className="error-text">{message}</p>
+        <p className="error-text">{message || 'An unexpected error occurred'}</p>
       </div>
       <div className="error-actions">
         {onRetry && (
@@ -28,4 +28,5 @@ export default function ErrorMessage({ message, onClose, onRetry }) {
     </div>
   )
 }
+
 

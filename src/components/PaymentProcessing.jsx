@@ -26,3 +26,4 @@ export default function PaymentProcessing({ merchant, amount }) {
   )
 }
 
+
