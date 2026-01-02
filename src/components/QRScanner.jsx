@@ -8,7 +8,7 @@ export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
   const streamRef = useRef(null)
   const [isScanning, setIsScanning] = useState(false)
   const [error, setError] = useState(null)
-  const [facingMode, setFacingMode] = useState('environment') // 'environment' = back, 'user' = front
+  const [facingMode, setFacingMode] = useState('environment')
 
   useEffect(() => {
     if (isOpen) {
@@ -27,7 +27,7 @@ export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
       setError(null)
       setIsScanning(true)
 
-      // Stop existing stream if any
+
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop())
       }
@@ -46,7 +46,7 @@ export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
         await videoRef.current.play()
       }
 
-      // Start scanning after video is ready
+  
       videoRef.current.addEventListener('loadedmetadata', () => {
         scanQRCode()
       }, { once: true })
@@ -88,9 +88,7 @@ export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
 
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
 
-        // Simple QR code detection simulation
-        // In a real app, you'd use jsQR or html5-qrcode library
-        // For now, we'll simulate scanning
+
         requestAnimationFrame(scan)
       } else {
         requestAnimationFrame(scan)
@@ -101,7 +99,7 @@ export default function QRScanner({ isOpen, onClose, onScanSuccess }) {
   }
 
   const handleManualInput = () => {
-    // Simulate QR scan result
+
     const mockQRData = prompt('Enter QR code data (or scan with camera):')
     if (mockQRData) {
       onScanSuccess(mockQRData)

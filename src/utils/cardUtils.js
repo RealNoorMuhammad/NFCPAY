@@ -1,25 +1,24 @@
-// Format card number with spaces (XXXX XXXX XXXX XXXX)
+
 export function formatCardNumber(value) {
   const cleaned = value.replace(/\s/g, '')
   const chunks = cleaned.match(/.{1,4}/g) || []
   return chunks.join(' ')
 }
 
-// Validate Visa card number (starts with 4, 13-19 digits)
 export function validateVisaCard(cardNumber) {
   const cleaned = cardNumber.replace(/\s/g, '')
   
-  // Must start with 4
+
   if (!cleaned.startsWith('4')) {
     return { valid: false, error: 'Visa cards must start with 4' }
   }
   
-  // Must be 13-19 digits
+
   if (!/^\d{13,19}$/.test(cleaned)) {
     return { valid: false, error: 'Card number must be 13-19 digits' }
   }
   
-  // Luhn algorithm check
+
   if (!luhnCheck(cleaned)) {
     return { valid: false, error: 'Invalid card number' }
   }
@@ -27,7 +26,7 @@ export function validateVisaCard(cardNumber) {
   return { valid: true }
 }
 
-// Luhn algorithm for card validation
+
 function luhnCheck(cardNumber) {
   let sum = 0
   let isEven = false
@@ -49,7 +48,7 @@ function luhnCheck(cardNumber) {
   return sum % 10 === 0
 }
 
-// Validate amount
+
 export function validateAmount(amount) {
   const num = parseFloat(amount)
   
@@ -63,5 +62,6 @@ export function validateAmount(amount) {
   
   return { valid: true, value: num }
 }
+
 
 

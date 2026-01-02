@@ -28,7 +28,7 @@ function App() {
     refreshBalance: refreshWalletBalance
   } = useSolanaWallet()
   
-  const [view, setView] = useState('main') // 'main', 'processing', 'success'
+  const [view, setView] = useState('main') 
   const [currentTransaction, setCurrentTransaction] = useState(null)
   const [error, setError] = useState(null)
   const [showAddMoneyModal, setShowAddMoneyModal] = useState(false)
@@ -42,7 +42,7 @@ function App() {
     setCurrentTransaction(data)
     setView('processing')
 
-    // Simulate processing delay
+
     setTimeout(() => {
       const success = deduct(data.amount)
       if (success) {
@@ -84,7 +84,7 @@ function App() {
     setCurrentTransaction(data)
     setView('processing')
 
-    // Simulate processing delay
+ 
     setTimeout(() => {
       const success = deduct(data.amount)
       if (success) {
@@ -112,27 +112,26 @@ function App() {
   }
 
   const handleConnectWallet = async () => {
-    setError(null) // Clear any previous errors
+    setError(null) 
     const success = await connectWallet()
-    // Error will be synced via useEffect when walletError changes
+
     if (!success && !walletError) {
-      // Fallback if no error was set
+
       setError('Failed to connect wallet. Please make sure Phantom wallet is installed and try again.')
     }
   }
 
   const handleDisconnectWallet = async () => {
     await disconnectWallet()
-    setError(null) // Clear error when disconnecting
+    setError(null) 
   }
 
-  // Sync wallet errors with app error state (but clear if balance is successfully fetched)
+
   useEffect(() => {
     if (walletError) {
-      // Only show connection errors, not balance fetch errors
+  
       if (walletError.includes('Failed to fetch balance')) {
-        // Don't show balance fetch errors - they're not critical
-        // Clear any existing error if balance is loaded
+  
         if (solBalance !== null) {
           setError(null)
         }
@@ -140,7 +139,7 @@ function App() {
       }
       setError(walletError)
     } else if (isConnected && solBalance !== null) {
-      // Clear error if wallet is connected and balance is loaded
+
       setError(null)
     }
   }, [walletError, isConnected, solBalance])

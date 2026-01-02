@@ -16,7 +16,7 @@ export default function AddMoneyForm({ isOpen, onClose, onAddMoney }) {
   if (!isOpen) return null
 
   const handleCardNumberChange = (e) => {
-    const value = e.target.value.replace(/\D/g, '') // Only digits
+    const value = e.target.value.replace(/\D/g, '') 
     if (value.length <= 19) {
       setCardNumber(formatCardNumber(value))
     }
@@ -24,7 +24,7 @@ export default function AddMoneyForm({ isOpen, onClose, onAddMoney }) {
 
   const handleAmountChange = (e) => {
     const value = e.target.value.replace(/[^\d.]/g, '')
-    // Allow only one decimal point
+
     const parts = value.split('.')
     if (parts.length <= 2) {
       setAmount(value)
@@ -65,14 +65,14 @@ export default function AddMoneyForm({ isOpen, onClose, onAddMoney }) {
     e.preventDefault()
     setError(null)
 
-    // Validate card number
+
     const cardValidation = validateVisaCard(cardNumber)
     if (!cardValidation.valid) {
       setError(cardValidation.error)
       return
     }
 
-    // Validate amount
+
     const amountValidation = validateAmount(amount)
     if (!amountValidation.valid) {
       setError(amountValidation.error)
@@ -81,10 +81,10 @@ export default function AddMoneyForm({ isOpen, onClose, onAddMoney }) {
 
     setIsProcessing(true)
 
-    // Simulate network delay
+
     await new Promise(resolve => setTimeout(resolve, 1500))
 
-    // Simulate network error on first attempt only
+  
     if (!isRetry && !showNetworkError) {
       setIsProcessing(false)
       setShowNetworkError(true)
@@ -92,7 +92,7 @@ export default function AddMoneyForm({ isOpen, onClose, onAddMoney }) {
       return
     }
 
-    // Success - add money
+
     onAddMoney(amountValidation.value)
     handleClose()
   }

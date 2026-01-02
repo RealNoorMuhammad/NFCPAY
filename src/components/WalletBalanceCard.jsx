@@ -16,12 +16,12 @@ export default function WalletBalanceCard({ publicKey, balance, onDisconnect, on
     return bal.toFixed(4)
   }
 
-  // Auto-refresh balance every 30 seconds
+
   useEffect(() => {
     if (publicKey && onRefresh) {
       const interval = setInterval(() => {
         onRefresh()
-      }, 30000) // Refresh every 30 seconds
+      }, 30000) 
 
       return () => clearInterval(interval)
     }
@@ -32,7 +32,7 @@ export default function WalletBalanceCard({ publicKey, balance, onDisconnect, on
     setIsLoading(true)
     setShowNetworkError(false)
 
-    // Simulate loading for 2-3 seconds
+
     setTimeout(() => {
       setIsLoading(false)
       setShowNetworkError(true)

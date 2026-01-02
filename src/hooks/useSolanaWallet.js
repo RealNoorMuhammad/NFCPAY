@@ -56,6 +56,17 @@ export function useSolanaWallet() {
         throw new Error('Phantom wallet is not properly initialized. Please refresh the page.')
       }
 
+      // Check if already connected
+      if (window.solana.isConnected && window.solana.publicKey) {
+        const pubKey = window.solana.publicKey.toString()
+        setPublicKey(pubKey)
+        setIsConnected(true)
+        await fetchBalance(pubKey)
+        setIsLoading(false)
+        return true
+      }
+
+      // Connect to wallet
       const response = await window.solana.connect({ onlyIfTrusted: false })
       
       if (!response) {
@@ -109,7 +120,7 @@ export function useSolanaWallet() {
   // Disconnect from wallet
   const disconnect = useCallback(async () => {
     try {
-      if (window.solana && isConnected) {
+      if (isPhantomInstalled() && window.solana && isConnected) {
         await window.solana.disconnect()
       }
       setPublicKey(null)
@@ -118,7 +129,11 @@ export function useSolanaWallet() {
       setError(null)
     } catch (err) {
       console.error('Error disconnecting wallet:', err)
-      setError('Failed to disconnect wallet')
+      // Even if disconnect fails, clear local state
+      setPublicKey(null)
+      setIsConnected(false)
+      setBalance(null)
+      setError(null)
     }
   }, [isConnected])
 
@@ -131,13 +146,16 @@ export function useSolanaWallet() {
 
   // Check if already connected on mount
   useEffect(() => {
-    if (isPhantomInstalled() && window.solana.isConnected) {
-      const pubKey = window.solana.publicKey?.toString()
-      if (pubKey) {
-        setPublicKey(pubKey)
-        setIsConnected(true)
-        fetchBalance(pubKey)
-      }
+    if (!isPhantomInstalled()) {
+      return
+    }
+
+    // Check if already connected on mount
+    if (window.solana.isConnected && window.solana.publicKey) {
+      const pubKey = window.solana.publicKey.toString()
+      setPublicKey(pubKey)
+      setIsConnected(true)
+      fetchBalance(pubKey)
     }
 
     // Listen for account changes
@@ -154,19 +172,23 @@ export function useSolanaWallet() {
       }
     }
 
-    if (isPhantomInstalled()) {
-      window.solana.on('accountChanged', handleAccountChange)
-      window.solana.on('disconnect', () => {
-        setPublicKey(null)
-        setIsConnected(false)
-        setBalance(null)
-      })
+    // Handle disconnect event
+    const handleDisconnect = () => {
+      setPublicKey(null)
+      setIsConnected(false)
+      setBalance(null)
+      setError(null)
     }
 
+    // Add event listeners
+    window.solana.on('accountChanged', handleAccountChange)
+    window.solana.on('disconnect', handleDisconnect)
+
+    // Cleanup function
     return () => {
       if (isPhantomInstalled()) {
         window.solana.removeListener('accountChanged', handleAccountChange)
-        window.solana.removeListener('disconnect', () => {})
+        window.solana.removeListener('disconnect', handleDisconnect)
       }
     }
   }, [fetchBalance])

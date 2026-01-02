@@ -13,7 +13,7 @@ export default function SendMoneyForm({ balance, onSendMoney }) {
 
   const handleAmountChange = (e) => {
     const value = e.target.value.replace(/[^\d.]/g, '')
-    // Allow only one decimal point
+ 
     const parts = value.split('.')
     if (parts.length <= 2) {
       setAmount(value)
@@ -25,7 +25,7 @@ export default function SendMoneyForm({ balance, onSendMoney }) {
   }
 
   const handleQRScan = (qrData) => {
-    // Set the scanned QR data as recipient
+
     setRecipient(qrData)
     setShowQRScanner(false)
   }
@@ -34,26 +34,26 @@ export default function SendMoneyForm({ balance, onSendMoney }) {
     e.preventDefault()
     setError(null)
 
-    // Validate recipient first
+
     if (!recipient.trim()) {
       setError('Please enter recipient name or NFC destination')
       return
     }
 
-    // Validate amount
+
     const amountValidation = validateAmount(amount)
     if (!amountValidation.valid) {
       setError(amountValidation.error)
       return
     }
 
-    // Check if balance is zero or insufficient - show error and stop
+
     if (balance <= 0) {
       setError('Need to add money first')
       return
     }
 
-    // Check if amount exceeds balance
+
     if (amountValidation.value > balance) {
       setError('Need to add money first')
       return
@@ -61,16 +61,16 @@ export default function SendMoneyForm({ balance, onSendMoney }) {
 
     setIsProcessing(true)
 
-    // Simulate NFC sending delay
+
     await new Promise(resolve => setTimeout(resolve, 2000))
 
-    // Process the payment
+
     onSendMoney({
       merchant: recipient.trim(),
       amount: amountValidation.value
     })
 
-    // Reset form
+
     setAmount('')
     setRecipient('')
     setIsProcessing(false)

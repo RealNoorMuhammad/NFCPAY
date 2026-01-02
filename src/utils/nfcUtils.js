@@ -1,12 +1,12 @@
-// Check if Web NFC API is available
+
 export function isNFCAvailable() {
   return 'NDEFReader' in window
 }
 
-// Check for ad blocker (heuristic: try to access blocked resources)
+
 export async function checkAdBlocker() {
   try {
-    // Try to create a test element that ad blockers typically block
+
     const test = document.createElement('div')
     test.innerHTML = '&nbsp;'
     test.className = 'adsbox'
@@ -14,7 +14,7 @@ export async function checkAdBlocker() {
     test.style.left = '-9999px'
     document.body.appendChild(test)
     
-    // Check if element was removed (ad blocker behavior)
+
     await new Promise(resolve => setTimeout(resolve, 100))
     const blocked = !document.body.contains(test) || test.offsetHeight === 0
     
@@ -28,7 +28,7 @@ export async function checkAdBlocker() {
   }
 }
 
-// Read NFC tag data
+
 export async function readNFCTag() {
   if (!isNFCAvailable()) {
     throw new Error('Web NFC API is not available in this browser. Please use Chrome on Android or Edge on Windows.')
@@ -37,7 +37,7 @@ export async function readNFCTag() {
   try {
     const reader = new NDEFReader()
     
-    // Check for ad blocker
+
     const hasAdBlocker = await checkAdBlocker()
     if (hasAdBlocker) {
       throw new Error('Ad blocker detected. Please disable your ad blocker to use NFC functionality. Web NFC requires certain browser features that may be blocked.')
@@ -48,7 +48,7 @@ export async function readNFCTag() {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error('NFC scan timeout. Please try again and make sure your NFC tag is close to your device.'))
-      }, 30000) // 30 second timeout
+      }, 30000) 
 
       reader.addEventListener('reading', (event) => {
         clearTimeout(timeout)
@@ -57,17 +57,17 @@ export async function readNFCTag() {
           let merchantName = 'Unknown Merchant'
           let amount = 0
 
-          // Parse NDEF records
+  
           for (const record of event.message.records) {
             if (record.recordType === 'text') {
               const text = decoder.decode(record.data)
-              // Try to parse JSON format: {"merchant":"Name","amount":10.50}
+           
               try {
                 const data = JSON.parse(text)
                 merchantName = data.merchant || merchantName
                 amount = parseFloat(data.amount) || amount
               } catch (e) {
-                // If not JSON, try to parse simple format: "Merchant Name|10.50"
+        
                 const parts = text.split('|')
                 if (parts.length >= 2) {
                   merchantName = parts[0].trim()
@@ -118,7 +118,7 @@ export async function readNFCTag() {
   }
 }
 
-// Simulate NFC read for development/testing
+
 export function simulateNFCTag(merchant = 'Test Merchant', amount = 25.50) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -126,8 +126,9 @@ export function simulateNFCTag(merchant = 'Test Merchant', amount = 25.50) {
         merchant,
         amount
       })
-    }, 1500) // Simulate 1.5 second delay
+    }, 1500) 
   })
 }
+
 
 

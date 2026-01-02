@@ -9,7 +9,7 @@ export default function NFCScanner({ onScanSuccess, onError }) {
   const timeoutRef = useRef(null)
 
   useEffect(() => {
-    // Cleanup timeout on unmount
+
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
@@ -21,18 +21,18 @@ export default function NFCScanner({ onScanSuccess, onError }) {
     setIsScanning(true)
     setShowModal(true)
 
-    // Set timeout to show ad blocker error after 5 seconds
+
     timeoutRef.current = setTimeout(() => {
       setIsScanning(false)
       setShowModal(false)
       onError('Remove ads blocker from browser to show NFCs')
     }, 5000)
 
-    // Only try to read NFC if available
+
     if (isNFCAvailable()) {
       try {
         const data = await readNFCTag()
-        // Clear the timeout if scan succeeds before 5 seconds
+
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current)
         }
@@ -40,7 +40,7 @@ export default function NFCScanner({ onScanSuccess, onError }) {
         setShowModal(false)
         onScanSuccess(data)
       } catch (error) {
-        // Clear the timeout if there's an error
+
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current)
         }
@@ -49,7 +49,7 @@ export default function NFCScanner({ onScanSuccess, onError }) {
         onError(error.message)
       }
     }
-    // If NFC is not available, the timeout will trigger after 5 seconds
+
   }
 
   const handleCloseModal = () => {
